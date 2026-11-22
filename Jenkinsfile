@@ -22,13 +22,19 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest .'
+               sh '''
+            docker build \
+            -t java-kind-demo:8 \
+            -t java-kind-demo:latest .
+               '''
             }
         }
 
         stage('Load Image into KIND') {
             steps {
-                sh 'kind load docker-image ${IMAGE_NAME}:${IMAGE_TAG} --name ${KIND_CLUSTER}'
+                sh '''
+            kind load docker-image java-kind-demo:8 --name devops-cluster
+        '''
             }
         }
 
